@@ -24,6 +24,9 @@
             <RouterLink class="nav-link" to="/companies">Empresas</RouterLink>
           </li>
           <li class="nav-item">
+            <RouterLink class="nav-link" to="/collection-routes">Rotas de Coleta</RouterLink>
+          </li>
+          <li class="nav-item">
             <RouterLink class="nav-link" to="/companies/new">Nova Empresa</RouterLink>
           </li>
         </ul>
