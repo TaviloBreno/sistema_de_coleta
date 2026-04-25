@@ -48,82 +48,59 @@ Centralizar o processo de coleta de residuos em uma aplicacao web moderna, permi
 
 ## Arquitetura da solucao
 
-A solucao segue arquitetura desacoplada entre API e cliente web:
-
-- Backend API: CodeIgniter 4, responsavel por regras de negocio, persistencia e seguranca
-- Frontend SPA: Vue.js 3, responsavel pela experiencia do usuario e consumo da API
-- Banco de dados relacional: MySQL ou MariaDB
+A solucao segue os principios da **Clean Architecture**, garantindo desacoplamento, testabilidade e facil manutencao:
 
 ### Visao de camadas
 
-- Apresentacao: Vue 3 (componentes, rotas e estado)
-- Aplicacao: controllers e services (orquestracao de casos de uso)
-- Dominio: entidades e regras de negocio
-- Infraestrutura: modelos, migrations, integracoes e logs
+- **Apresentacao (Presentation)**:
+  - Backend: Controllers do CodeIgniter 4 atuando como entry-points de API.
+  - Frontend: Componentes Vue 3 e Stores Pinia. Arquivos separados para Template (HTML), Logica (JS) e Estilo (CSS).
+- **Aplicacao (Application)**: Casos de Uso (Use Cases) e DTOs que orquestram a execucao das regras de negocio.
+- **Dominio (Domain)**: Entidades ricas e interfaces (contratos) de repositorios, independentes de frameworks.
+- **Infraestrutura (Infrastructure)**: Implementacoes de Repositorios, Modelos do CI4, Migrations e servicos de terceiros (Axios, Banco de Dados).
 
 ## Tecnologias
 
 ### Backend
 
 - PHP 8.2+
-- CodeIgniter 4
+- CodeIgniter 4.7+
+- **PestPHP 3** (Framework de testes BDD)
+- **Mockery** (Simulacao de objetos para testes unitarios)
 - Composer
-- PHPUnit
 
 ### Frontend
 
-- Node.js 18+
-- Vue.js 3
+- Node.js 20+
+- Vue.js 3 (Composition API)
 - Vite
-- Pinia (sugestao para estado global)
-- Vue Router
+- **Vitest** (Testes unitarios e integracao rapidos)
+- **Cypress** (E2E, Visual Regression e Performance Audit)
+- Pinia & Vue Router
 
 ### Banco e suporte
 
 - MySQL ou MariaDB
-- Extensoes PHP: intl, mbstring, json, curl, mysqli ou pdo_mysql
+- Leaflet (Mapas) & Chart.js (Dashboard)
 
 ## Estrutura do repositorio
 
 ```text
 sistema_de_coleta/
-  api/                  # Backend em CodeIgniter 4
+  api/                  # Backend em PHP / CodeIgniter 4
     app/
-    public/
-    tests/
-    writable/
+      Application/      # Camada de Casos de Uso e DTOs
+      Domain/           # Entidades e Interfaces
+      Infrastructure/   # Implementacoes de Repositorios
+      Controllers/      # Camada de Apresentacao API
+    tests/              # Testes unitarios e features com Pest
+  frontend/             # Frontend SPA em Vue 3
+    src/
+      Domain/           # Regras de negocio puras
+      Data/             # Repositorios e chamadas de API
+      Presentation/     # Componentes, Views e Estilos
+    cypress/            # Testes E2E e visuais
 ```
-
-Observacao: o frontend Vue 3 pode estar em uma pasta dedicada (exemplo: web/) em uma proxima etapa de evolucao do repositorio.
-
-## Fluxo funcional
-
-1. Cadastro de empresa e ponto de coleta.
-2. Criacao da ordem de coleta com tipo e volume estimado.
-3. Atribuicao para rota/equipe.
-4. Atualizacao de status durante execucao (pendente -> em rota -> concluida).
-5. Consolidacao para relatorios e indicadores.
-
-## Ambiente de desenvolvimento
-
-### Requisitos
-
-- Git
-- PHP 8.2+
-- Composer
-- Banco MySQL/MariaDB
-- Node.js 18+ (para o frontend)
-
-### Variaveis de ambiente (backend)
-
-No modulo api, crie o arquivo .env a partir do arquivo env e configure:
-
-- app.baseURL
-- database.default.hostname
-- database.default.database
-- database.default.username
-- database.default.password
-- database.default.DBDriver
 
 ## Guia rapido para iniciar
 
@@ -142,30 +119,19 @@ API local: http://localhost:8080
 ### 2. Subir frontend (Vue 3)
 
 ```bash
-cd web
+cd frontend
 npm install
 npm run dev
 ```
 
-Frontend local (padrao Vite): http://localhost:5173
-
-Se ainda nao existir o frontend no repositorio, mantenha apenas a API ativa e evolua os endpoints antes da camada web.
-
-## Roadmap
-
-- Autenticacao com JWT e controle de perfis 🔐
-- Geolocalizacao de pontos de coleta e roteirizacao 🗺️
-- Notificacoes automaticas por e-mail e mensageria 📲
-- Dashboard executivo com indicadores de SLA e produtividade 📈
-- Exportacao de relatorios em PDF/CSV 📄
+Frontend local: http://localhost:5173
 
 ## Boas praticas e padroes
 
-- Versionar migrations de banco e evitar alteracoes manuais em producao
-- Validar payloads na API antes de persistir dados
-- Padronizar respostas de erro e sucesso
-- Cobrir regras criticas com testes automatizados
-- Documentar endpoints no README da API
+- **SOLID & DRY**: Codigo modularizado e reutilizavel.
+- **BDD (Behavior Driven Development)**: Testes que descrevem o comportamento do sistema.
+- **Clean Architecture**: Regras de negocio isoladas da interface e infraestrutura.
+- **Automated Testing**: Cobertura com Pest, Vitest e Cypress.
 
 ## Como contribuir
 
