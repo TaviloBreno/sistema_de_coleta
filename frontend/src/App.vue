@@ -10,15 +10,12 @@ const authStore = useAuthStore()
   <div class="min-vh-100 bg-body-tertiary">
     <Navbar />
 
-    <div v-if="authStore.isAuthenticated" class="container-fluid">
-      <div class="row">
-        <div class="d-none d-md-block col-md-3 col-lg-2 px-0">
-          <Sidebar />
-        </div>
-        <main class="col-12 col-md-9 col-lg-10">
-          <RouterView />
-        </main>
-      </div>
+    <div v-if="authStore.isAuthenticated" class="d-flex">
+      <Sidebar class="d-none d-md-block flex-shrink-0" />
+      
+      <main class="flex-grow-1 p-3">
+        <RouterView />
+      </main>
     </div>
 
     <main v-else>
