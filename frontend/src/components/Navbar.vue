@@ -81,7 +81,7 @@ async function logout() {
 @media (max-width: 576px) {
   .navbar-brand {
     font-size: 1.1rem;
-    max-width: 70%;
+    max-width: 85%;
   }
   
   .navbar-brand i {
@@ -92,7 +92,7 @@ async function logout() {
 @media (max-width: 400px) {
   .navbar-brand {
     font-size: 1rem;
-    max-width: 60%;
+    max-width: 80%;
   }
 }
 </style>
