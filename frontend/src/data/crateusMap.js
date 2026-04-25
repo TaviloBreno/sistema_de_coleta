@@ -17,6 +17,22 @@ export const crateusRouteCoordinates = {
     { lat: -5.1732, lng: -40.6798, label: 'Mercado do Venâncios' },
     { lat: -5.1716, lng: -40.6842, label: 'Final da rota' },
   ],
+  'Rota Manoel Idelfonso': [
+    { lat: -5.1785, lng: -40.6655, label: 'Inicio Rua Manoel Idelfonso' },
+    { lat: -5.1775, lng: -40.6645, label: 'Ponto Manoel Idelfonso' },
+  ],
+  'Rota Sargento Herminio': [
+    { lat: -5.1840, lng: -40.6755, label: 'Inicio Av. Sargento Herminio' },
+    { lat: -5.1852, lng: -40.6770, label: 'Ponto Sargento Herminio' },
+  ],
+  'Rota Moura Fe': [
+    { lat: -5.1795, lng: -40.6665, label: 'Inicio Rua Moura Fé' },
+    { lat: -5.1805, lng: -40.6658, label: 'Ponto Moura Fe' },
+  ],
+  'Rota Dom Pedro II': [
+    { lat: -5.1805, lng: -40.6700, label: 'Inicio Rua Dom Pedro II' },
+    { lat: -5.1820, lng: -40.6715, label: 'Ponto Dom Pedro II' },
+  ],
 }
 
 export const crateusPointCoordinates = {
@@ -24,4 +40,8 @@ export const crateusPointCoordinates = {
   'Escola Municipal Maria Amalia': { lat: -5.1846, lng: -40.6762 },
   'Hospital Sao Lucas Crateus': { lat: -5.1749, lng: -40.6751 },
   'Mercado do Venâncios': { lat: -5.1732, lng: -40.6798 },
+  'Ponto Manoel Idelfonso': { lat: -5.1775, lng: -40.6645 },
+  'Ponto Sargento Herminio': { lat: -5.1852, lng: -40.6770 },
+  'Ponto Moura Fe': { lat: -5.1805, lng: -40.6658 },
+  'Ponto Dom Pedro II': { lat: -5.1820, lng: -40.6715 },
 }
