@@ -20,24 +20,22 @@ async function logout() {
 <template>
   <nav v-if="authStore.isAuthenticated" class="navbar navbar-expand navbar-dark bg-success shadow-sm">
     <div class="container-fluid">
-      <div class="d-flex align-items-center">
+      <RouterLink class="navbar-brand d-flex align-items-center flex-nowrap" to="/companies">
+        <i class="bi bi-recycle flex-shrink-0 me-2"></i>
+        <span class="text-truncate">Sistema de Coleta</span>
+      </RouterLink>
+
+      <div class="ms-auto d-flex align-items-center">
+        <span class="text-white-50 me-3 d-none d-sm-inline">Olá, {{ authStore.user?.name || 'Usuário' }}</span>
+        
         <button 
-          class="btn btn-success me-3 p-1" 
+          class="btn btn-success p-1" 
           type="button" 
           @click="layoutStore.toggleSidebar"
           aria-label="Alternar sidebar"
         >
           <i class="bi bi-list fs-4"></i>
         </button>
-
-        <RouterLink class="navbar-brand d-flex align-items-center flex-nowrap" to="/companies">
-          <i class="bi bi-recycle flex-shrink-0 me-2"></i>
-          <span class="text-truncate">Sistema de Coleta</span>
-        </RouterLink>
-      </div>
-
-      <div class="ms-auto d-flex align-items-center">
-        <span class="text-white-50 me-3 d-none d-sm-inline">Olá, {{ authStore.user?.name || 'Usuário' }}</span>
       </div>
     </div>
   </nav>
