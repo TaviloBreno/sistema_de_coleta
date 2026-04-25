@@ -17,10 +17,10 @@ async function logout() {
 
 <template>
   <nav v-if="authStore.isAuthenticated" class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
-    <div class="container">
-      <RouterLink class="navbar-brand d-flex align-items-center gap-2" to="/companies">
-        <i class="bi bi-recycle"></i>
-        <span>Sistema de Coleta</span>
+    <div class="container-fluid">
+      <RouterLink class="navbar-brand d-flex align-items-center flex-nowrap" to="/companies">
+        <i class="bi bi-recycle flex-shrink-0 me-2"></i>
+        <span class="text-truncate">Sistema de Coleta</span>
       </RouterLink>
 
       <button
@@ -81,7 +81,7 @@ async function logout() {
 @media (max-width: 576px) {
   .navbar-brand {
     font-size: 1.1rem;
-    gap: 0.25rem !important;
+    max-width: 70%;
   }
   
   .navbar-brand i {
@@ -92,6 +92,7 @@ async function logout() {
 @media (max-width: 400px) {
   .navbar-brand {
     font-size: 1rem;
+    max-width: 60%;
   }
 }
 </style>
