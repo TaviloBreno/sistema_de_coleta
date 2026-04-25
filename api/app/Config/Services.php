@@ -3,6 +3,8 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseService;
+use App\Libraries\AuthContext;
+use App\Libraries\AuthTokenService;
 
 /**
  * Services Configuration file.
@@ -29,4 +31,22 @@ class Services extends BaseService
      *     return new \CodeIgniter\Example();
      * }
      */
+
+    public static function authContext(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('authContext');
+        }
+
+        return new AuthContext();
+    }
+
+    public static function authTokenService(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('authTokenService');
+        }
+
+        return new AuthTokenService();
+    }
 }
