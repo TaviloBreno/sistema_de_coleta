@@ -60,7 +60,7 @@ class CreateUsers extends Migration
         ]);
 
         $this->forge->addKey('id', true);
-        $this->forge->addKey('email', true);
+        $this->forge->addUniqueKey('email');
         $this->forge->addKey('role');
         $this->forge->createTable('users');
     }
