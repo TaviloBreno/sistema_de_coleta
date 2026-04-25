@@ -2,7 +2,7 @@
 
 Plataforma completa para gerenciamento de coleta de residuos, com foco em operacao, rastreabilidade e sustentabilidade. ♻️
 
-![Caminhao de coleta de lixo](https://source.unsplash.com/1800x900/?garbage-truck,waste-collection)
+![Caminhao de coleta de lixo](https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=1800&q=80)
 
 ## Sumario
 
@@ -44,7 +44,7 @@ Centralizar o processo de coleta de residuos em uma aplicacao web moderna, permi
 - Coletor: atualiza status de execucao no campo
 - Gestor: acompanha indicadores e produtividade
 
-![Lixeiras para coleta seletiva](https://source.unsplash.com/1800x900/?trash,recycling,bin)
+![Lixeiras para coleta seletiva](https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=1800&q=80)
 
 ## Arquitetura da solucao
 
