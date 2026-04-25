@@ -4,7 +4,9 @@ import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 
 import companiesApi from '@/api/CompaniesApi'
+import collectionRoutesApi from '@/api/CollectionRoutesApi'
 import CompanyFormInputs from '@/components/CompanyFormInputs.vue'
+import CollectionRoutesList from '@/components/CollectionRoutesList.vue'
 import LoadSpinner from '@/components/LoadSpinner.vue'
 
 const route = useRoute()
@@ -15,8 +17,11 @@ const companyId = Number(route.params.id)
 const isLoading = ref(false)
 const isSaving = ref(false)
 const isDeleting = ref(false)
+const isRoutesLoading = ref(false)
 const errorMessage = ref('')
+const routesErrorMessage = ref('')
 const validationErrors = ref({})
+const companyRoutes = ref([])
 const form = ref({
   name: '',
   phone: '',
@@ -49,6 +54,19 @@ async function fetchCompany() {
     errorMessage.value = getErrorMessage(error)
   } finally {
     isLoading.value = false
+  }
+}
+
+async function fetchCompanyRoutes() {
+  isRoutesLoading.value = true
+  routesErrorMessage.value = ''
+
+  try {
+    companyRoutes.value = await collectionRoutesApi.getByCompany(companyId)
+  } catch (error) {
+    routesErrorMessage.value = getErrorMessage(error)
+  } finally {
+    isRoutesLoading.value = false
   }
 }
 
@@ -87,7 +105,23 @@ async function deleteCompany() {
   }
 }
 
-onMounted(fetchCompany)
+async function deleteCompanyRoute(routeItem) {
+  if (!window.confirm(`Deseja excluir a rota ${routeItem.name}?`)) {
+    return
+  }
+
+  try {
+    await collectionRoutesApi.destroy(routeItem.id)
+    companyRoutes.value = companyRoutes.value.filter((item) => item.id !== routeItem.id)
+    toast.success('Rota excluida com sucesso.')
+  } catch (error) {
+    toast.error(getErrorMessage(error))
+  }
+}
+
+onMounted(async () => {
+  await Promise.all([fetchCompany(), fetchCompanyRoutes()])
+})
 </script>
 
 <template>
@@ -129,5 +163,27 @@ onMounted(fetchCompany)
         </button>
       </div>
     </form>
+
+    <div class="d-flex justify-content-end mt-3">
+      <RouterLink class="btn btn-success" :to="`/collection-routes/new?company_id=${companyId}`">
+        <i class="bi bi-plus-circle me-1"></i>
+        Nova rota para esta empresa
+      </RouterLink>
+    </div>
+
+    <div class="mt-3">
+      <div v-if="routesErrorMessage" class="alert alert-danger mb-3">{{ routesErrorMessage }}</div>
+
+      <LoadSpinner v-if="isRoutesLoading" label="Carregando rotas da empresa..." />
+
+      <CollectionRoutesList
+        v-else
+        :routes="companyRoutes"
+        title="Rotas desta empresa"
+        :show-company="false"
+        empty-message="Esta empresa ainda nao possui rotas cadastradas."
+        @delete="deleteCompanyRoute"
+      />
+    </div>
   </section>
 </template>
