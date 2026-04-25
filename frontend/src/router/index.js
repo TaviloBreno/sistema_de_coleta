@@ -18,6 +18,8 @@ import RegisterView from '@/views/RegisterView.vue'
 import CollectionRequestsView from '@/views/CollectionRequestsView.vue'
 import CollectionRequestCreateView from '@/views/CollectionRequestCreateView.vue'
 import CollectionRequestDetailsView from '@/views/CollectionRequestDetailsView.vue'
+import InteractiveMapView from '@/views/InteractiveMapView.vue'
+import CollectionAnalyticsView from '@/views/CollectionAnalyticsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -120,6 +122,18 @@ const router = createRouter({
       name: 'collection-requests-details',
       component: CollectionRequestDetailsView,
       props: true,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/interactive-map',
+      name: 'interactive-map',
+      component: InteractiveMapView,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/collection-analytics',
+      name: 'collection-analytics',
+      component: CollectionAnalyticsView,
       meta: { requiresAuth: true },
     },
     {

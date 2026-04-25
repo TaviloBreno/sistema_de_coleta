@@ -43,6 +43,12 @@ async function logout() {
           <li v-if="canManageCatalog" class="nav-item">
             <RouterLink class="nav-link" to="/collection-routes">Rotas de Coleta</RouterLink>
           </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/interactive-map">Mapa Interativo</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/collection-analytics">Graficos e Relatorios</RouterLink>
+          </li>
           <li v-if="canManageCatalog" class="nav-item">
             <RouterLink class="nav-link" to="/waste-types">Tipos de Residuos</RouterLink>
           </li>
