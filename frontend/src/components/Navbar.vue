@@ -27,6 +27,9 @@
             <RouterLink class="nav-link" to="/collection-routes">Rotas de Coleta</RouterLink>
           </li>
           <li class="nav-item">
+            <RouterLink class="nav-link" to="/waste-types">Tipos de Residuos</RouterLink>
+          </li>
+          <li class="nav-item">
             <RouterLink class="nav-link" to="/companies/new">Nova Empresa</RouterLink>
           </li>
         </ul>
