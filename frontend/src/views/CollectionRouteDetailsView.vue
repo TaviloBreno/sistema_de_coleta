@@ -4,8 +4,10 @@ import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 
 import collectionRoutesApi from '@/api/CollectionRoutesApi'
+import collectionPointsApi from '@/api/CollectionPointsApi'
 import companiesApi from '@/api/CompaniesApi'
 import CollectionRouteFormInputs from '@/components/CollectionRouteFormInputs.vue'
+import CollectionPointsList from '@/components/CollectionPointsList.vue'
 import LoadSpinner from '@/components/LoadSpinner.vue'
 
 const route = useRoute()
@@ -16,9 +18,12 @@ const routeId = Number(route.params.id)
 const isLoading = ref(false)
 const isSaving = ref(false)
 const isDeleting = ref(false)
+const isPointsLoading = ref(false)
 const errorMessage = ref('')
+const pointsErrorMessage = ref('')
 const validationErrors = ref({})
 const companies = ref([])
+const points = ref([])
 const form = ref({
   company_id: 0,
   name: '',
@@ -82,6 +87,19 @@ async function fetchData() {
   }
 }
 
+async function fetchPoints() {
+  isPointsLoading.value = true
+  pointsErrorMessage.value = ''
+
+  try {
+    points.value = await collectionPointsApi.list(routeId)
+  } catch (error) {
+    pointsErrorMessage.value = getErrorMessage(error)
+  } finally {
+    isPointsLoading.value = false
+  }
+}
+
 async function updateRoute() {
   isSaving.value = true
   validationErrors.value = {}
@@ -123,7 +141,23 @@ async function deleteRoute() {
   }
 }
 
-onMounted(fetchData)
+async function deletePoint(item) {
+  if (!window.confirm(`Deseja excluir o ponto ${item.name}?`)) {
+    return
+  }
+
+  try {
+    await collectionPointsApi.destroy(item.id)
+    points.value = points.value.filter((point) => point.id !== item.id)
+    toast.success('Ponto de coleta excluido com sucesso.')
+  } catch (error) {
+    toast.error(getErrorMessage(error))
+  }
+}
+
+onMounted(async () => {
+  await Promise.all([fetchData(), fetchPoints()])
+})
 </script>
 
 <template>
@@ -165,5 +199,18 @@ onMounted(fetchData)
         </button>
       </div>
     </form>
+
+    <div class="d-flex justify-content-end mt-3">
+      <RouterLink class="btn btn-success" :to="`/collection-points/new?route_id=${routeId}`">
+        <i class="bi bi-plus-circle me-1"></i>
+        Novo ponto de coleta
+      </RouterLink>
+    </div>
+
+    <div class="mt-3">
+      <div v-if="pointsErrorMessage" class="alert alert-danger mb-3">{{ pointsErrorMessage }}</div>
+      <LoadSpinner v-if="isPointsLoading" label="Carregando pontos da rota..." />
+      <CollectionPointsList v-else :points="points" @delete="deletePoint" />
+    </div>
   </section>
 </template>
