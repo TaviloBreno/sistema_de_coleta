@@ -66,3 +66,32 @@ async function logout() {
     </div>
   </nav>
 </template>
+
+<style scoped>
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  transition: font-size 0.2s ease;
+}
+
+.navbar-brand span {
+  white-space: nowrap;
+}
+
+@media (max-width: 576px) {
+  .navbar-brand {
+    font-size: 1.1rem;
+    gap: 0.25rem !important;
+  }
+  
+  .navbar-brand i {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .navbar-brand {
+    font-size: 1rem;
+  }
+}
+</style>

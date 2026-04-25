@@ -57,6 +57,9 @@ async function logout() {
   color: #198754;
   border-radius: 0.5rem;
   transition: all 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sidebar-link:hover,
