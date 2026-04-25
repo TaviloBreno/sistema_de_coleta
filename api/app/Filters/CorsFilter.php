@@ -19,7 +19,7 @@ class CorsFilter implements FilterInterface
     {
         $origin = $request->getHeaderLine('Origin');
 
-        if ($origin !== '' && in_array($origin, $this->allowedOrigins, true)) {
+        if ($this->isAllowedOrigin($origin)) {
             header("Access-Control-Allow-Origin: {$origin}");
             header('Vary: Origin');
         }
@@ -33,6 +33,29 @@ class CorsFilter implements FilterInterface
         }
 
         return null;
+    }
+
+    private function isAllowedOrigin(string $origin): bool
+    {
+        if ($origin === '') {
+            return false;
+        }
+
+        if (in_array($origin, $this->allowedOrigins, true)) {
+            return true;
+        }
+
+        $parts = parse_url($origin);
+
+        if ($parts === false || !isset($parts['scheme'], $parts['host'])) {
+            return false;
+        }
+
+        if (!in_array($parts['scheme'], ['http', 'https'], true)) {
+            return false;
+        }
+
+        return in_array($parts['host'], ['localhost', '127.0.0.1'], true);
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)

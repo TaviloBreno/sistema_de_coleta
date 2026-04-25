@@ -8,6 +8,7 @@ import collectionPointsApi from '@/api/CollectionPointsApi'
 import companiesApi from '@/api/CompaniesApi'
 import CollectionRouteFormInputs from '@/components/CollectionRouteFormInputs.vue'
 import CollectionPointsList from '@/components/CollectionPointsList.vue'
+import CollectionRouteMap from '@/components/CollectionRouteMap.vue'
 import LoadSpinner from '@/components/LoadSpinner.vue'
 
 const route = useRoute()
@@ -212,5 +213,7 @@ onMounted(async () => {
       <LoadSpinner v-if="isPointsLoading" label="Carregando pontos da rota..." />
       <CollectionPointsList v-else :points="points" @delete="deletePoint" />
     </div>
+
+    <CollectionRouteMap v-if="!isPointsLoading && !isLoading" :route-name="form.name" :points="points" />
   </section>
 </template>
