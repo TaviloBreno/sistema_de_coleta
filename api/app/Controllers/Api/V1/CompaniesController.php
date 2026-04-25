@@ -18,7 +18,7 @@ class CompaniesController extends ResourceController
      */
     public function index()
     {
-        return $this->respond($this->model->findAll());
+        return $this->respond($this->model->orderBy('name', 'ASC')->findAll());
     }
 
     /**
