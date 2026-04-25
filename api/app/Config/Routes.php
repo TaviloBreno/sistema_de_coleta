@@ -7,8 +7,10 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 // Public auth endpoints
-$routes->post('api/register', 'App\Controllers\Api\V1\RegisterController::create');
-$routes->post('api/login', 'App\Controllers\Api\V1\LoginController::create');
+$routes->post('api/register', 'Api\V1\RegisterController::create');
+$routes->post('api/login', 'Api\V1\LoginController::create');
+$routes->options('api/register', static fn() => service('response')->setStatusCode(204));
+$routes->options('api/login', static fn() => service('response')->setStatusCode(204));
 
 $routes->group('api', ['namespace' => 'App\Controllers\Api\V1', 'filter' => 'auth'], static function ($routes) {
     $routes->options('companies', 'CompaniesController::options');
