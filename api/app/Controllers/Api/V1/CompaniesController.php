@@ -100,7 +100,23 @@ class CompaniesController extends ResourceController
      */
     public function update($id = null)
     {
-        //
+        $rules = (new CompanyValidation())->getRules($id);
+
+        if(!$this->validate($rules)) {
+            return $this->failValidationErrors(
+                $this->validator->getErrors(),
+                'Erro de validação.',
+                ResponseInterface::HTTP_BAD_REQUEST
+            );
+        }
+
+        $inputRequest = esc($this->request->getJSON(assoc: true));
+
+        $id = $this->model->update($id, $inputRequest);
+
+        $companyUpdated = $this->model->asObject()->find($id);
+
+        return $this->respond(data: $companyUpdated, message: 'Empresa atualizada com sucesso.');
     }
 
     /**
@@ -112,6 +128,17 @@ class CompaniesController extends ResourceController
      */
     public function delete($id = null)
     {
-        //
+        $company = $this->model->asObject()->find($id);
+
+        if ($company === null) {
+            return $this->failNotFound(
+                description: 'Empresa não encontrada.',
+                code: ResponseInterface::HTTP_NOT_FOUND
+            );
+        }
+
+        $this->model->delete($id);
+
+        return $this->respondDeleted(message: 'Empresa deletada com sucesso.');
     }
 }
