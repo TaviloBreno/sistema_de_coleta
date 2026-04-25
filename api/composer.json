@@ -16,7 +16,7 @@
     "require-dev": {
         "fakerphp/faker": "^1.9",
         "mikey179/vfsstream": "^1.6",
-        "mockery/mockery": "*",
+        "mockery/mockery": "^1.6",
         "pestphp/pest": "^2.36",
         "pestphp/pest-plugin-faker": "^2.0",
         "phpunit/phpunit": "^10.5.16"
