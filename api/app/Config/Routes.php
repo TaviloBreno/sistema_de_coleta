@@ -6,10 +6,21 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
-$routes->group('api', ['namespace' => 'App\Controllers\Api\V1'], static function ($routes) {
+// Public auth endpoints
+$routes->post('api/register', 'App\Controllers\Api\V1\RegisterController::create');
+$routes->post('api/login', 'App\Controllers\Api\V1\LoginController::create');
+
+$routes->group('api', ['namespace' => 'App\Controllers\Api\V1', 'filter' => 'auth'], static function ($routes) {
     $routes->options('companies', 'CompaniesController::options');
     $routes->options('companies/(:num)', 'CompaniesController::options/$1');
     $routes->resource('companies', ['controller' => 'CompaniesController'], ['except' => ['new', 'edit']]);
+
+    $routes->get('user', 'UserController::index');
+    $routes->post('logout', 'UserController::logout');
+
+    $routes->options('collection-requests', 'CollectionRequestsController::options');
+    $routes->options('collection-requests/(:num)', 'CollectionRequestsController::options/$1');
+    $routes->resource('collection-requests', ['controller' => 'CollectionRequestsController'], ['except' => ['new', 'edit']]);
 
     $routes->get('companies/(:num)/collection-routes', 'CollectionRoutesController::byCompany/$1');
     $routes->options('companies/(:num)/collection-routes', 'CollectionRoutesController::options/$1');
