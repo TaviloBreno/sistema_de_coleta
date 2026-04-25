@@ -5,6 +5,7 @@ namespace App\Controllers\Api\V1;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\CompanyModel as CompaniesModel;
+use App\Validation\CompanyValidation;
 
 class CompaniesController extends ResourceController
 {
@@ -30,7 +31,16 @@ class CompaniesController extends ResourceController
      */
     public function show($id = null)
     {
-        //
+        $company = $this->model->asObject()->find($id);
+
+        if ($company === null) {
+            return $this->failNotFound(
+                description: 'Empresa não encontrada.',
+                code: ResponseInterface::HTTP_NOT_FOUND
+            );
+        }
+
+        return $this->respond(data: $company, status: ResponseInterface::HTTP_OK);
     }
 
     /**
@@ -50,7 +60,23 @@ class CompaniesController extends ResourceController
      */
     public function create()
     {
-        //
+        $rules = (new CompanyValidation())->getRules();
+
+        if (!$this->validate($rules)) {
+            return $this->failValidationErrors(
+                $this->validator->getErrors(),
+                'Erro de validação.',
+                ResponseInterface::HTTP_BAD_REQUEST
+            );
+        }
+
+        $inputRequest = esc($this->request->getJSON(assoc: true));
+
+        $id =$this->model->insert($inputRequest);
+
+        $companyCreated = $this->model->asObject()->find($id);
+
+        return $this->respondCreated(data: $companyCreated, message: 'Empresa criada com sucesso.');
     }
 
     /**
