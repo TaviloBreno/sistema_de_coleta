@@ -2,27 +2,39 @@
 
 namespace App\Controllers\Api\V1;
 
-use App\Models\CollectionEventModel;
+use App\Application\DTOs\CollectionEvent\CreateCollectionEventInputDTO;
+use App\Application\DTOs\CollectionEvent\UpdateCollectionEventInputDTO;
+use App\Application\UseCases\CollectionEvent\CreateCollectionEventUseCase;
+use App\Application\UseCases\CollectionEvent\DeleteCollectionEventUseCase;
+use App\Application\UseCases\CollectionEvent\GetCollectionEventUseCase;
+use App\Application\UseCases\CollectionEvent\ListCollectionEventsUseCase;
+use App\Application\UseCases\CollectionEvent\UpdateCollectionEventUseCase;
+use App\Infrastructure\Persistence\CI4CollectionEventRepository;
 use App\Validation\CollectionEventValidation;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\RESTful\ResourceController;
+use Exception;
 
 class CollectionEventsController extends ResourceController
 {
-    protected $modelName = CollectionEventModel::class;
-    protected $format    = 'json';
+    protected $format = 'json';
+    private CI4CollectionEventRepository $repository;
+
+    public function __construct()
+    {
+        // Ideally this should be injected by a DI Container
+        $this->repository = new CI4CollectionEventRepository();
+    }
 
     public function index()
     {
         $recordId = $this->request->getGet('collection_record_id');
-
-        $builder = $this->model->orderBy('event_at', 'DESC');
-
-        if ($recordId !== null && $recordId !== '') {
-            $builder->where('collection_record_id', (int) $recordId);
-        }
-
-        return $this->respond($builder->findAll());
+        $useCase = new ListCollectionEventsUseCase($this->repository);
+        
+        $events = $useCase->execute($recordId !== null && $recordId !== '' ? (int) $recordId : null);
+        
+        $response = array_map(fn($e) => $e->toArray(), $events);
+        return $this->respond($response);
     }
 
     public function byRecord($recordId = null)
@@ -31,23 +43,22 @@ class CollectionEventsController extends ResourceController
             return $this->failValidationErrors(['collection_record_id' => 'ID de registro invalido.']);
         }
 
-        $events = $this->model
-            ->where('collection_record_id', (int) $recordId)
-            ->orderBy('event_at', 'DESC')
-            ->findAll();
+        $useCase = new ListCollectionEventsUseCase($this->repository);
+        $events = $useCase->execute((int) $recordId);
 
-        return $this->respond($events);
+        $response = array_map(fn($e) => $e->toArray(), $events);
+        return $this->respond($response);
     }
 
     public function show($id = null)
     {
-        $event = $this->model->find($id);
-
-        if ($event === null) {
-            return $this->failNotFound('Evento de coleta nao encontrado.');
+        try {
+            $useCase = new GetCollectionEventUseCase($this->repository);
+            $event = $useCase->execute((int) $id);
+            return $this->respond($event->toArray());
+        } catch (Exception $e) {
+            return $this->failNotFound($e->getMessage());
         }
-
-        return $this->respond($event);
     }
 
     public function create()
@@ -58,39 +69,48 @@ class CollectionEventsController extends ResourceController
             return $this->failValidationErrors($this->validator->getErrors());
         }
 
-        $input = $this->request->getJSON(true) ?? [];
-        $id = $this->model->insert($input);
-
-        return $this->respondCreated($this->model->find($id), 'Evento de coleta criado com sucesso.');
+        $input = new CreateCollectionEventInputDTO($this->request->getJSON(true) ?? []);
+        
+        try {
+            $useCase = new CreateCollectionEventUseCase($this->repository);
+            $event = $useCase->execute($input);
+            return $this->respondCreated($event->toArray(), 'Evento de coleta criado com sucesso.');
+        } catch (Exception $e) {
+            return $this->failServerError($e->getMessage());
+        }
     }
 
     public function update($id = null)
     {
-        if ($this->model->find($id) === null) {
-            return $this->failNotFound('Evento de coleta nao encontrado.');
-        }
-
         $rules = (new CollectionEventValidation())->getRules();
 
         if (!$this->validate($rules)) {
             return $this->failValidationErrors($this->validator->getErrors());
         }
 
-        $input = $this->request->getJSON(true) ?? [];
-        $this->model->update($id, $input);
-
-        return $this->respond($this->model->find($id), ResponseInterface::HTTP_OK, 'Evento de coleta atualizado com sucesso.');
+        $input = new UpdateCollectionEventInputDTO((int) $id, $this->request->getJSON(true) ?? []);
+        
+        try {
+            $useCase = new UpdateCollectionEventUseCase($this->repository);
+            $event = $useCase->execute($input);
+            return $this->respond($event->toArray(), ResponseInterface::HTTP_OK, 'Evento de coleta atualizado com sucesso.');
+        } catch (Exception $e) {
+            if ($e->getMessage() === 'Evento de coleta nao encontrado.') {
+                return $this->failNotFound($e->getMessage());
+            }
+            return $this->failServerError($e->getMessage());
+        }
     }
 
     public function delete($id = null)
     {
-        if ($this->model->find($id) === null) {
-            return $this->failNotFound('Evento de coleta nao encontrado.');
+        try {
+            $useCase = new DeleteCollectionEventUseCase($this->repository);
+            $useCase->execute((int) $id);
+            return $this->respondDeleted(['id' => (int) $id], 'Evento de coleta excluido com sucesso.');
+        } catch (Exception $e) {
+            return $this->failNotFound($e->getMessage());
         }
-
-        $this->model->delete($id);
-
-        return $this->respondDeleted(['id' => (int) $id], 'Evento de coleta excluido com sucesso.');
     }
 
     public function options($id = null)
