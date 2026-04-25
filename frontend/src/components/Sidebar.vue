@@ -65,7 +65,7 @@ async function logout() {
 
 <style scoped>
 .sidebar-panel {
-  min-height: calc(100vh - 64px);
+  min-height: calc(150vh - 64px);
   overflow-x: hidden;
   width: 250px;
   transition: width 0.3s ease;
