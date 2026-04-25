@@ -112,11 +112,23 @@ class CompaniesController extends ResourceController
 
         $inputRequest = esc($this->request->getJSON(assoc: true));
 
-        $id = $this->model->update($id, $inputRequest);
+        $this->model->update($id, $inputRequest);
 
         $companyUpdated = $this->model->asObject()->find($id);
 
         return $this->respond(data: $companyUpdated, message: 'Empresa atualizada com sucesso.');
+    }
+
+    /**
+     * Handle CORS preflight requests.
+     *
+     * @param int|string|null $id
+     *
+     * @return ResponseInterface
+     */
+    public function options($id = null)
+    {
+        return $this->response->setStatusCode(ResponseInterface::HTTP_NO_CONTENT);
     }
 
     /**
