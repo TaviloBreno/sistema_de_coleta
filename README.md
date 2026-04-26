@@ -28,53 +28,47 @@ O **Sistema de Coleta** centraliza todo o fluxo operacional de gestão de resíd
 
 ---
 
-## 📸 Demonstração Visual (Slides)
+## 📸 Demonstração do Sistema
 
-<details>
-  <summary><b>▶ Clique aqui para expandir o Tour pelo Sistema</b></summary>
-  <br>
+Abaixo você pode conferir as principais telas e funcionalidades da plataforma em operação.
 
-  <div align="center">
-    <h3>1. Gestão de Empresas</h3>
-    <img src="img_sistema/sc-01.png" width="900" alt="Gestão de Empresas">
-    <p><i>Painel administrativo para controle de empresas parceiras e prestadoras de serviço.</i></p>
-    <br>
-    <hr width="50%">
-    <br>
+---
 
-    <h3>2. Planejamento de Rotas</h3>
-    <img src="img_sistema/sc-02.png" width="900" alt="Rotas de Coleta">
-    <p><i>Interface de controle e visualização de rotas agendadas e status de execução.</i></p>
-    <br>
-    <hr width="50%">
-    <br>
+### 1. Gestão de Empresas
+![Gestão de Empresas](img_sistema/sc-01.png)
+*Painel administrativo para controle de empresas parceiras e prestadoras de serviço.*
 
-    <h3>3. Monitoramento via Mapa Interativo</h3>
-    <img src="img_sistema/sc-03.png" width="900" alt="Mapa Interativo">
-    <p><i>Acompanhamento geoespacial (Leaflet) da passagem das rotas e pontos de coleta.</i></p>
-    <br>
-    <hr width="50%">
-    <br>
+---
 
-    <h3>4. Inteligência de Dados (Analytics)</h3>
-    <img src="img_sistema/sc-04.png" width="900" alt="Dashboards">
-    <p><i>Gráficos dinâmicos (Chart.js) e relatórios para análise de volume e tipos de resíduos.</i></p>
-    <br>
-    <hr width="50%">
-    <br>
+### 2. Planejamento de Rotas
+![Rotas de Coleta](img_sistema/sc-02.png)
+*Interface de controle e visualização de rotas agendadas e status de execução.*
 
-    <h3>5. Fluxo de Solicitações</h3>
-    <img src="img_sistema/sc-05.png" width="900" alt="Solicitações">
-    <p><i>Gerenciamento de ordens de serviço e solicitações de coleta sob demanda.</i></p>
-    <br>
-    <hr width="50%">
-    <br>
+---
 
-    <h3>6. Catálogo de Resíduos</h3>
-    <img src="img_sistema/sc-06.png" width="900" alt="Tipos de Resíduos">
-    <p><i>Configuração personalizada de tipos de materiais e regras de coleta.</i></p>
-  </div>
-</details>
+### 3. Monitoramento via Mapa Interativo
+![Mapa Interativo](img_sistema/sc-03.png)
+*Acompanhamento geoespacial (Leaflet) da passagem das rotas e pontos de coleta.*
+
+---
+
+### 4. Inteligência de Dados (Analytics)
+![Dashboards](img_sistema/sc-04.png)
+*Gráficos dinâmicos (Chart.js) e relatórios para análise de volume e tipos de resíduos.*
+
+---
+
+### 5. Fluxo de Solicitações
+![Solicitações](img_sistema/sc-05.png)
+*Gerenciamento de ordens de serviço e solicitações de coleta sob demanda.*
+
+---
+
+### 6. Catálogo de Resíduos
+![Tipos de Resíduos](img_sistema/sc-06.png)
+*Configuração personalizada de tipos de materiais e regras de coleta.*
+
+---
 
 ---
 
