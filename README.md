@@ -13,6 +13,7 @@ Plataforma inteligente para gerenciamento de coleta de resíduos, focada em rast
 - [Stack Tecnológica](#-stack-tecnológica)
 - [Estrutura do Repositório](#-estrutura-do-repositório)
 - [Guia de Instalação](#-guia-de-instalação)
+- [Executando Testes](#-executando-testes)
 - [Boas Práticas](#-boas-práticas-e-padrões)
 
 ---
@@ -166,6 +167,30 @@ npm install
 npm run dev
 ```
 *Frontend local:* `http://localhost:5173`
+
+---
+
+## 🧪 Executando Testes
+
+O sistema possui uma suíte de testes automatizados para garantir a qualidade e estabilidade das entregas.
+
+### 1. Testes do Backend (API)
+Os testes do backend utilizam o **PestPHP**.
+```bash
+cd api
+php spark test         # Executa todos os testes (Unitários e Feature)
+# ou
+./vendor/bin/pest      # Executa diretamente via Pest
+```
+
+### 2. Testes do Frontend
+O frontend utiliza **Vitest** para testes unitários e **Cypress** para testes E2E.
+```bash
+cd frontend
+npm run test:unit      # Executa testes unitários com Vitest
+npm run test:e2e       # Abre a interface do Cypress para testes E2E
+npm run test:e2e:run   # Executa testes E2E em modo headless
+```
 
 ---
 
