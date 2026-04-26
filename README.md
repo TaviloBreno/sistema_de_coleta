@@ -1,149 +1,187 @@
-# Sistema de Coleta de Residuos
+# Sistema de Coleta de Resíduos
 
-Plataforma completa para gerenciamento de coleta de residuos, com foco em operacao, rastreabilidade e sustentabilidade. ♻️
+Plataforma inteligente para gerenciamento de coleta de resíduos, focada em rastreabilidade, eficiência logística e sustentabilidade urbana. ♻️
 
-![Caminhao de coleta de lixo](https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=1800&q=80)
+![Banner do Projeto](https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=1800&q=80)
 
-## Sumario
+## 📋 Sumário
 
-- [Objetivo](#objetivo)
-- [Escopo do sistema](#escopo-do-sistema)
-- [Arquitetura da solucao](#arquitetura-da-solucao)
-- [Tecnologias](#tecnologias)
-- [Estrutura do repositorio](#estrutura-do-repositorio)
-- [Fluxo funcional](#fluxo-funcional)
-- [Ambiente de desenvolvimento](#ambiente-de-desenvolvimento)
-- [Guia rapido para iniciar](#guia-rapido-para-iniciar)
-- [Roadmap](#roadmap)
-- [Boas praticas e padroes](#boas-praticas-e-padroes)
-- [Como contribuir](#como-contribuir)
-- [Licenca](#licenca)
+- [Objetivo](#-objetivo)
+- [Demonstração Visual (Slides)](#-demonstração-visual-slides)
+- [Funcionalidades Principais](#-funcionalidades-principais)
+- [Arquitetura da Solução](#-arquitetura-da-solução)
+- [Stack Tecnológica](#-stack-tecnológica)
+- [Estrutura do Repositório](#-estrutura-do-repositório)
+- [Guia de Instalação](#-guia-de-instalação)
+- [Boas Práticas](#-boas-práticas-e-padrões)
 
-## Objetivo
+---
 
-Centralizar o processo de coleta de residuos em uma aplicacao web moderna, permitindo:
+## 🎯 Objetivo
 
-- Planejamento de coletas e rotas 🚚
-- Controle de empresas, pontos e tipos de residuos 🏢
-- Acompanhamento de execucao em tempo real 📍
-- Registro historico para auditoria e metricas 📊
+O **Sistema de Coleta** centraliza todo o fluxo operacional de gestão de resíduos em uma aplicação web moderna e resiliente. O projeto visa:
 
-## Escopo do sistema
+- **Otimização Logística:** Planejamento inteligente de rotas e pontos de coleta. 🚚
+- **Rastreabilidade:** Acompanhamento em tempo real da execução das coletas. 📍
+- **Gestão de Dados:** Dashboards detalhados para auditoria e métricas de sustentabilidade. 📊
+- **Compliance:** Controle rigoroso de empresas, tipos de resíduos e permissões de acesso. 🏢
 
-### Modulos de negocio
+---
 
-- Cadastros: empresas, usuarios, pontos de coleta, tipos de residuos
-- Operacao: abertura de ordens de coleta, distribuicao de rotas e atualizacao de status
-- Monitoramento: painel de coletas pendentes, em rota e concluidas
-- Relatorios: consolidado por periodo, localizacao, volume e tipo de material
+## 📸 Demonstração Visual (Slides)
 
-### Perfis previstos
+<details>
+  <summary><b>▶ Clique aqui para expandir o Tour pelo Sistema</b></summary>
+  <br>
 
-- Administrador: gerencia regras, usuarios e configuracoes
-- Operador: cria e acompanha coletas
-- Coletor: atualiza status de execucao no campo
-- Gestor: acompanha indicadores e produtividade
+  <div align="center">
+    <h3>1. Gestão de Empresas</h3>
+    <img src="img_sistema/sc-01.png" width="900" alt="Gestão de Empresas">
+    <p><i>Painel administrativo para controle de empresas parceiras e prestadoras de serviço.</i></p>
+    <br>
+    <hr width="50%">
+    <br>
 
-![Lixeiras para coleta seletiva](https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=1800&q=80)
+    <h3>2. Planejamento de Rotas</h3>
+    <img src="img_sistema/sc-02.png" width="900" alt="Rotas de Coleta">
+    <p><i>Interface de controle e visualização de rotas agendadas e status de execução.</i></p>
+    <br>
+    <hr width="50%">
+    <br>
 
-## Arquitetura da solucao
+    <h3>3. Monitoramento via Mapa Interativo</h3>
+    <img src="img_sistema/sc-03.png" width="900" alt="Mapa Interativo">
+    <p><i>Acompanhamento geoespacial (Leaflet) da passagem das rotas e pontos de coleta.</i></p>
+    <br>
+    <hr width="50%">
+    <br>
 
-A solucao segue os principios da **Clean Architecture**, garantindo desacoplamento, testabilidade e facil manutencao:
+    <h3>4. Inteligência de Dados (Analytics)</h3>
+    <img src="img_sistema/sc-04.png" width="900" alt="Dashboards">
+    <p><i>Gráficos dinâmicos (Chart.js) e relatórios para análise de volume e tipos de resíduos.</i></p>
+    <br>
+    <hr width="50%">
+    <br>
 
-### Visao de camadas
+    <h3>5. Fluxo de Solicitações</h3>
+    <img src="img_sistema/sc-05.png" width="900" alt="Solicitações">
+    <p><i>Gerenciamento de ordens de serviço e solicitações de coleta sob demanda.</i></p>
+    <br>
+    <hr width="50%">
+    <br>
 
-- **Apresentacao (Presentation)**:
-  - Backend: Controllers do CodeIgniter 4 atuando como entry-points de API.
-  - Frontend: Componentes Vue 3 e Stores Pinia. Arquivos separados para Template (HTML), Logica (JS) e Estilo (CSS).
-- **Aplicacao (Application)**: Casos de Uso (Use Cases) e DTOs que orquestram a execucao das regras de negocio.
-- **Dominio (Domain)**: Entidades ricas e interfaces (contratos) de repositorios, independentes de frameworks.
-- **Infraestrutura (Infrastructure)**: Implementacoes de Repositorios, Modelos do CI4, Migrations e servicos de terceiros (Axios, Banco de Dados).
+    <h3>6. Catálogo de Resíduos</h3>
+    <img src="img_sistema/sc-06.png" width="900" alt="Tipos de Resíduos">
+    <p><i>Configuração personalizada de tipos de materiais e regras de coleta.</i></p>
+  </div>
+</details>
 
-## Tecnologias
+---
+
+## 🚀 Funcionalidades Principais
+
+### Módulos de Negócio
+- **Cadastros:** Gestão de empresas, usuários, pontos estratégicos e tipos de resíduos.
+- **Operação:** Abertura de ordens, distribuição de rotas e atualizações de status em tempo real.
+- **Monitoramento:** Painel de controle para coletas pendentes, em rota e concluídas.
+- **Relatórios:** Exportação e visualização consolidada por período, volume e material.
+
+### Perfis de Acesso
+- **Administrador:** Gestão global de regras, usuários e configurações do sistema.
+- **Operador:** Criação, agendamento e acompanhamento de coletas.
+- **Coletor:** Atualização de status e registro de execução diretamente no campo.
+- **Gestor:** Visualização de KPIs, indicadores de produtividade e impacto ambiental.
+
+---
+
+## 🏗️ Arquitetura da Solução
+
+O projeto foi construído seguindo os princípios da **Clean Architecture**, garantindo um sistema altamente testável, desacoplado e de fácil evolução.
+
+### Divisão de Camadas
+- **Presentation:** 
+  - Backend: Controllers CodeIgniter 4 (API REST).
+  - Frontend: Componentes Vue 3 e State Management com Pinia.
+- **Application:** Casos de Uso (Use Cases) e DTOs que orquestram a lógica de negócio.
+- **Domain:** Entidades ricas e interfaces (contratos), independentes de frameworks externos.
+- **Infrastructure:** Implementações de Repositórios, Modelos, Migrations e integrações de terceiros.
+
+---
+
+## 🛠️ Stack Tecnológica
 
 ### Backend
-
-- PHP 8.2+
-- CodeIgniter 4.7+
-- **PestPHP 3** (Framework de testes BDD)
-- **Mockery** (Simulacao de objetos para testes unitarios)
-- Composer
+- **PHP 8.2+** & **CodeIgniter 4.7+**
+- **PestPHP 3** (Framework de testes BDD moderno)
+- **Mockery** (Simulação de objetos para testes unitários)
+- **Composer** (Gerenciador de dependências)
 
 ### Frontend
+- **Node.js 20+** & **Vue.js 3** (Composition API)
+- **Vite** (Build tool ultra-rápida)
+- **Vitest** (Testes unitários e de integração)
+- **Cypress** (Testes E2E e Audits de Performance)
+- **Pinia** (Gerenciamento de estado global)
 
-- Node.js 20+
-- Vue.js 3 (Composition API)
-- Vite
-- **Vitest** (Testes unitarios e integracao rapidos)
-- **Cypress** (E2E, Visual Regression e Performance Audit)
-- Pinia & Vue Router
+### Suporte e Dados
+- **MySQL / MariaDB**
+- **Leaflet** (Mapas e Geoprocessamento)
+- **Chart.js** (Visualização de dados)
 
-### Banco e suporte
+---
 
-- MySQL ou MariaDB
-- Leaflet (Mapas) & Chart.js (Dashboard)
-
-## Estrutura do repositorio
+## 📂 Estrutura do Repositório
 
 ```text
 sistema_de_coleta/
-  api/                  # Backend em PHP / CodeIgniter 4
+  api/                  # Backend em PHP (CodeIgniter 4)
     app/
-      Application/      # Camada de Casos de Uso e DTOs
-      Domain/           # Entidades e Interfaces
-      Infrastructure/   # Implementacoes de Repositorios
-      Controllers/      # Camada de Apresentacao API
-    tests/              # Testes unitarios e features com Pest
-  frontend/             # Frontend SPA em Vue 3
+      Application/      # Camada de Orquestração
+      Domain/           # Core do Negócio (Independente)
+      Infrastructure/   # Persistência e Integrações
+      Controllers/      # Entry-points da API
+    tests/              # Suíte de testes com Pest
+  frontend/             # Frontend SPA (Vue 3)
     src/
-      Domain/           # Regras de negocio puras
-      Data/             # Repositorios e chamadas de API
-      Presentation/     # Componentes, Views e Estilos
-    cypress/            # Testes E2E e visuais
+      Domain/           # Lógica de negócio pura
+      Data/             # Comunicação com API e Repositórios
+      views/            # Páginas da aplicação
+      components/       # Componentes reutilizáveis
+    cypress/            # Testes de ponta a ponta
+  img_sistema/          # Assets de demonstração visual
 ```
 
-## Guia rapido para iniciar
+---
 
-### 1. Subir API (CodeIgniter 4)
+## ⚙️ Guia de Instalação
 
+### 1. Configuração da API
 ```bash
 cd api
 composer install
-copy env .env
+cp env .env           # Configure suas credenciais de banco no .env
 php spark migrate
 php spark serve
 ```
+*API local:* `http://localhost:8080`
 
-API local: http://localhost:8080
-
-### 2. Subir frontend (Vue 3)
-
+### 2. Configuração do Frontend
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-
-Frontend local: http://localhost:5173
-
-## Boas praticas e padroes
-
-- **SOLID & DRY**: Codigo modularizado e reutilizavel.
-- **BDD (Behavior Driven Development)**: Testes que descrevem o comportamento do sistema.
-- **Clean Architecture**: Regras de negocio isoladas da interface e infraestrutura.
-- **Automated Testing**: Cobertura com Pest, Vitest e Cypress.
-
-## Como contribuir
-
-1. Crie uma branch de feature.
-2. Implemente a alteracao com testes quando aplicavel.
-3. Atualize documentacao impactada.
-4. Abra PR para revisao.
-
-## Licenca
-
-Uso interno do projeto Sistema de Coleta de Residuos.
+*Frontend local:* `http://localhost:5173`
 
 ---
 
-Tecnologia e operacao para cidades mais limpas, eficientes e sustentaveis. 🌱
+## 💎 Boas Práticas e Padrões
+
+- **SOLID & DRY:** Código modularizado para máxima reutilização.
+- **BDD (Behavior Driven Development):** Testes que descrevem o comportamento real do usuário.
+- **Clean Code:** Nomenclatura semântica e funções de responsabilidade única.
+- **Automated QA:** Cobertura robusta com Pest, Vitest e Cypress.
+
+---
+
+Tecnologia e operação integradas para cidades mais limpas, eficientes e sustentáveis. 🌱
